@@ -1,6 +1,5 @@
 #include <string>
 #include "luacode.h"
-#include "LuauCeptionFlags.h"
 
 int main() {
     std::string src = "print'Hello World'";
