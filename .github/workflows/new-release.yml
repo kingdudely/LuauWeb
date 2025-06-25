@@ -54,7 +54,7 @@ jobs:
           key: luauweb-build
 
   upload:
-    needs: ["create-release"]
+    needs: ["build", "create-release"]
     runs-on: ubuntu-latest
     strategy:
       matrix:
