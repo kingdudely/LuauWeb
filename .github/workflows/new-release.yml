@@ -19,7 +19,7 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           repository: emscripten-core/emsdk
           path: emsdk
@@ -54,8 +54,8 @@ jobs:
       run: |
         mkdir -p dist
         cp build/compl/Luau.LuauWeb.${{ matrix.variant_name }}.js dist/LuauWeb.${{ matrix.variant_name }}.js
+    - uses: actions/checkout@v4
     - name: Commit and push
-      uses: actions/checkout@v4
       run: |
         cd $GITHUB_WORKSPACE
         git config user.name "github-actions[bot]"
