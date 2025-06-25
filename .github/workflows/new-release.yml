@@ -41,9 +41,6 @@ jobs:
   upload:
     needs: ["build"]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        variant_name: [Compiler, VM]
     steps:
     - uses: actions/checkout@v4
     - name: Restore build
@@ -54,11 +51,12 @@ jobs:
     - name: Copy built JS to dist/
       run: |
         mkdir -p dist
-        cp build/compl/Luau.LuauWeb.${{ matrix.variant_name }}.js dist/LuauWeb.${{ matrix.variant_name }}.js
+        cp build/compl/Luau.LuauWeb.Compiler.js dist/LuauWeb.Compiler.js
+        cp build/compl/Luau.LuauWeb.VM.js dist/LuauWeb.VM.js
     - name: Commit and push
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add dist/
-        git commit -m "chore: update dist for ${{ matrix.variant_name }} ${{ needs.create-release.outputs.tag_name }}" || echo "No changes to commit"
+        git commit -m "chore: update dist files" || echo "No changes to commit"
         git push
