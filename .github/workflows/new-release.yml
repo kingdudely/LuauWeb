@@ -27,7 +27,6 @@ jobs:
           draft: true
 
   build:
-    needs: ["create-release"]
     runs-on: ubuntu-latest
     steps:
       - name: Fetch submodules
@@ -55,7 +54,7 @@ jobs:
           key: luauweb-build
 
   upload:
-    needs: ["build"]
+    needs: ["create-release"]
     runs-on: ubuntu-latest
     strategy:
       matrix:
