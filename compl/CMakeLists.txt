@@ -11,6 +11,10 @@ option(LUAU_STATIC_CRT "Link with the static CRT (/MT)" OFF)
 option(LUAU_EXTERN_C "Use extern C for all APIs" ON)
 add_subdirectory(luau)
 
+# some emscripten config
+set(EMSCRIPTEN_OPTS)
+list(APPEND EMSCRIPTEN_OPTS -sEXPORTED_RUNTIME_METHODS=['HEAP32','HEAPU8','getValue','setValue'] -fexceptions -sSINGLE_FILE=1 -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT=web)
+
 # Compiler variant compile & link options
 set(COMPILER_CC_OPTS)
 list(APPEND COMPILER_CC_OPTS -O3 -flto)
@@ -36,9 +40,9 @@ target_link_libraries(Luau.LuauWeb.VM PUBLIC Luau.VM)
 # Compiler variant configuration
 target_compile_features(Luau.LuauWeb.Compiler PUBLIC cxx_std_17)
 target_compile_options(Luau.LuauWeb.Compiler PUBLIC ${COMPILER_CC_OPTS})
-target_link_options(Luau.LuauWeb.Compiler PUBLIC ${COMPILER_LN_OPTS} -fexceptions -sSINGLE_FILE=1)
+target_link_options(Luau.LuauWeb.Compiler PUBLIC ${COMPILER_LN_OPTS} ${EMSCRIPTEN_OPTS} -sEXPORT_NAME=LuauCompiler)
 
 # VM variant configuration
 target_compile_features(Luau.LuauWeb.VM PUBLIC cxx_std_17)
 target_compile_options(Luau.LuauWeb.VM PUBLIC ${VM_CC_OPTS})
-target_link_options(Luau.LuauWeb.VM PUBLIC ${VM_LN_OPTS} -fexceptions -sSINGLE_FILE=1)
+target_link_options(Luau.LuauWeb.VM PUBLIC ${VM_LN_OPTS} ${EMSCRIPTEN_OPTS} -sEXPORT_NAME=LuauVM)
