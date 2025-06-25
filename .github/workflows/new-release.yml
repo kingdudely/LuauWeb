@@ -63,7 +63,7 @@ jobs:
     - name: Restore build
       uses: actions/cache@v4
       with:
-        path: emsdk
+        path: build
         key: luauweb-build
     - uses: actions/upload-release-asset@v1
       env:
