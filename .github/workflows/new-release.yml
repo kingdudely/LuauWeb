@@ -1,0 +1,59 @@
+name: new-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: Release version including 0.
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: ${{ github.event.inputs.version }}
+          draft: true
+
+  build:
+    needs: ["create-release"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+        repository: emscripten-core/emsdk
+        path: emsdk
+    - name: emsdk install
+      run: |
+        cd emsdk
+        ./emsdk install latest
+        ./emsdk activate latest
+    - name: build
+      run: |
+        source emsdk/emsdk_env.sh
+        bash compl/build.sh
+    - uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.create-release.outputs.upload_url }}
+        asset_path: ${{ format('build/compl/Luau.LuauWeb.{}.js', matrix.variant_name) }} 
+        asset_name: ${{ format('LuauWeb.{}.js', matrix.variant_name) }} 
+        asset_content_type: application/octet-stream
+      strategy:
+      matrix:
+        include:
+          - variant_name: Compiler
+          - variant_name: VM
