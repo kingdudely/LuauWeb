@@ -30,6 +30,11 @@ jobs:
     needs: ["create-release"]
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
       - uses: actions/checkout@v2
         with:
           repository: emscripten-core/emsdk
@@ -39,11 +44,6 @@ jobs:
           cd emsdk
           ./emsdk install latest
           ./emsdk activate latest
-      - name: Fetch submodules
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-          fetch-depth: 0
       - name: Start build
         run: |
           source $GITHUB_WORKSPACE/emsdk/emsdk_env.sh
