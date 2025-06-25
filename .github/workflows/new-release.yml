@@ -29,6 +29,9 @@ jobs:
   build:
     needs: ["create-release"]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        variant_name: [Compiler, VM]
     steps:
     - uses: actions/checkout@v1
     - uses: actions/checkout@v2
@@ -52,8 +55,4 @@ jobs:
         asset_path: ${{ format('build/compl/Luau.LuauWeb.{}.js', matrix.variant_name) }} 
         asset_name: ${{ format('LuauWeb.{}.js', matrix.variant_name) }} 
         asset_content_type: application/octet-stream
-      strategy:
-        matrix:
-          include:
-            - variant_name: Compiler
-            - variant_name: VM
+
