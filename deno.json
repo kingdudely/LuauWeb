@@ -1,5 +1,5 @@
 {
-	"name": "@jLn0n/luau-web",
+	"name": "@jln0n/luau-web",
 	"version": "1.0.0",
 	"exports": "./lib/index.ts"
 }
