@@ -46,8 +46,8 @@ jobs:
           fetch-depth: 0
       - name: Start build
         run: |
-          source emsdk/emsdk_env.sh
-          bash compl/build.sh
+          source $GITHUB_WORKSPACE/emsdk/emsdk_env.sh
+          bash $GITHUB_WORKSPACE/compl/build.sh
       - name: Cache build output
         uses: actions/cache@v4
         with:
