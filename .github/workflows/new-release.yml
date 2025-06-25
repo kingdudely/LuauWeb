@@ -71,6 +71,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.create-release.outputs.upload_url }}
-        asset_path: ${{ format('build/compl/Luau.LuauWeb.{}.js', matrix.variant_name) }} 
-        asset_name: ${{ format('LuauWeb.{}.js', matrix.variant_name) }} 
+        asset_path: ${{ format('build/compl/Luau.LuauWeb.{0}.js', matrix.variant_name) }} 
+        asset_name: ${{ format('LuauWeb.{0}.js', matrix.variant_name) }} 
         asset_content_type: application/octet-stream
