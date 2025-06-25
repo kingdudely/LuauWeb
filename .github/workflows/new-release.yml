@@ -57,7 +57,7 @@ jobs:
           path: emsdk
           key: emsdk-cache
       - name: Fetch submodules
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
         with:
           submodules: true
           fetch-depth: 0
