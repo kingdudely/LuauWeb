@@ -55,6 +55,7 @@ jobs:
         mkdir -p dist
         cp build/compl/Luau.LuauWeb.${{ matrix.variant_name }}.js dist/LuauWeb.${{ matrix.variant_name }}.js
     - name: Commit and push
+      uses: actions/checkout@v4
       run: |
         cd $GITHUB_WORKSPACE
         git config user.name "github-actions[bot]"
