@@ -50,7 +50,18 @@ jobs:
     needs: ["setup-emsdk"]
     runs-on: ubuntu-latest
     steps:
-      - name: build
+      - uses: actions/checkout@v2
+      - name: Restore emsdk cache
+        uses: actions/cache@v4
+        with:
+          path: emsdk
+          key: emsdk-cache
+      - name: Fetch submodules
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: Start build
         run: |
           source emsdk/emsdk_env.sh
           bash compl/build.sh
@@ -67,12 +78,6 @@ jobs:
       matrix:
         variant_name: [Compiler, VM]
     steps:
-    - uses: actions/checkout@v2
-    - name: Restore emsdk cache
-      uses: actions/cache@v4
-      with:
-        path: emsdk
-        key: emsdk-cache
     - name: Restore build
       uses: actions/cache@v4
       with:
