@@ -45,12 +45,12 @@ jobs:
       matrix:
         variant_name: [Compiler, VM]
     steps:
+    - uses: actions/checkout@v4
     - name: Restore build
       uses: actions/cache@v4
       with:
         path: build
         key: luauweb-build
-    - uses: actions/checkout@v4
     - name: Copy built JS to dist/
       run: |
         mkdir -p dist
