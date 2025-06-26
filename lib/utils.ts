@@ -35,4 +35,14 @@ const read_cstring = (Module: CommonRuntime, ptr: number, length: number): strin
 	return _DECODER.decode(packed)
 }
 
-export { read_cstring, write_cstring, write_cstrings }
+const free_array = (Module: CommonRuntime, ptr: number) => {
+    let position = 0
+
+    while (Module.HEAP32[(ptr >> 2) + position] !== 0) {
+        Module._free(Module.HEAP32[(ptr >> 2) + position])
+        position += 1
+    }
+    Module._free(ptr)
+}
+
+export { read_cstring, write_cstring, write_cstrings, free_array }
