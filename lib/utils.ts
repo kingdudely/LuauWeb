@@ -4,10 +4,11 @@ const _ENCODER = new TextEncoder()
 const _DECODER = new TextDecoder()
 
 const write_cstring = (Module: CommonRuntime, value: string): number => {
-	const encoded = _ENCODER.encode(value + "\0")
-	const ptr = Module._malloc(encoded.length + 1) * 8
+	const encoded = _ENCODER.encode(value)
+	const ptr = Module._malloc(encoded.length + 1)
 
 	Module.HEAPU8.set(encoded, ptr)
+    Module.HEAPU8[ptr + encoded.length] = 0
 	return ptr
 }
 
@@ -19,10 +20,11 @@ const write_cstrings = (Module: CommonRuntime, strings: string[]): number => {
 	const array_ptr = Module._malloc((strings.length + 1) * 4)
 
 	for (let idx = 0; idx < strings.length; idx += 1) {
-		const value = _ENCODER.encode(strings[idx] + "\0")
-		const str_ptr = Module._malloc(value.length + 1)
+		const encoded = _ENCODER.encode(strings[idx])
+		const str_ptr = Module._malloc(encoded.length + 1)
 
-		Module.HEAPU8.set(value, str_ptr)
+		Module.HEAPU8.set(encoded, str_ptr)
+        Module.HEAPU8[str_ptr + encoded.length] = 0
 		Module.HEAP32[(array_ptr >> 2) + idx] = str_ptr
 	}
 	return array_ptr
