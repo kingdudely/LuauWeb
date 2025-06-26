@@ -1,6 +1,7 @@
 import type { CommonRuntime } from "./types.ts"
 
 const _ENCODER = new TextEncoder()
+const _DECODER = new TextDecoder()
 
 const write_cstring = (Module: CommonRuntime, value: string): number => {
 	const encoded = _ENCODER.encode(value + "\0")
@@ -28,8 +29,8 @@ const write_cstrings = (Module: CommonRuntime, strings: string[]): number => {
 }
 
 const read_cstring = (Module: CommonRuntime, ptr: number, length: number): string => {
-	const result = new Uint8Array(Module.HEAPU8.buffer, ptr, length)
-	return String.fromCharCode(...result)
+	const packed = new Uint8Array(Module.HEAPU8.buffer, ptr, length)
+	return _DECODER.decode(packed)
 }
 
 export { read_cstring, write_cstring, write_cstrings }
