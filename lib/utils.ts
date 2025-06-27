@@ -31,7 +31,7 @@ const write_cstrings = (Module: CommonRuntime, strings: string[]): number => {
 	return array_ptr
 }
 
-const read_lstring = (Module: CommonRuntime, ptr: number, length: number): string => {
+const read_utf8string = (Module: CommonRuntime, ptr: number, length: number): string => {
 	const packed = new Uint8Array(Module.HEAPU8.buffer, ptr, length)
 	return _DECODER.decode(packed)
 }
@@ -46,4 +46,4 @@ const free_array = (Module: CommonRuntime, ptr: number) => {
 	Module._free(ptr)
 }
 
-export { read_lstring, write_cstring, write_cstrings, free_array }
+export { read_utf8string, write_cstring, write_cstrings, free_array }

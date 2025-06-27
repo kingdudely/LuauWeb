@@ -1,6 +1,6 @@
 import LuauCompilerModule from "../dist/LuauWeb.Compiler.js"
 
-import { read_lstring, write_cstring, write_cstrings, free_array } from "./utils.ts"
+import { write_cstring, write_cstrings, free_array } from "./utils.ts"
 import type { LuauCompileOptions, LuauCompilerRuntime } from "./types.ts"
 
 const _ENCODER = new TextEncoder()
@@ -68,7 +68,7 @@ const [ luau_compile ] = await LuauCompilerModule().then((_Module) => {
 		return [option_ptr, _free_func]
 	}
 
-	const luau_compile = (source: string, options: LuauCompileOptions): [boolean, string] => {
+	const luau_compile = (source: string, options: LuauCompileOptions): [boolean, Uint8Array] => {
 		const [option_ptr, option_free] = create_luau_options(options)
 
 		const source_length = _ENCODER.encode(source).length
@@ -77,8 +77,8 @@ const [ luau_compile ] = await LuauCompilerModule().then((_Module) => {
 
 		const bytecode_ptr = _luau_compile(src_ptr, source_length, option_ptr, bc_size_ptr)
 		const bytecode_size = Module.HEAP32[bc_size_ptr >> 2]
-		const bytecode = read_lstring(Module, bytecode_ptr, bytecode_size)
-		const compile_success = bytecode[0] != "\0"
+		const bytecode = new Uint8Array(Module.HEAPU8.buffer, bytecode_ptr, bytecode_size)
+		const compile_success = (bytecode[0] != 0)
 
 		option_free()
 		_memfree(src_ptr)
@@ -91,7 +91,7 @@ const [ luau_compile ] = await LuauCompilerModule().then((_Module) => {
 })
 
 export abstract class LuauCompiler {
-	public static Compile(source: string, options: LuauCompileOptions = DEFAULT_COMPILE_OPTIONS): [boolean, string] {
+	public static Compile(source: string, options: LuauCompileOptions = DEFAULT_COMPILE_OPTIONS): [boolean, Uint8Array] {
 		return luau_compile(source, options)
 	}
 }
