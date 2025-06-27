@@ -1,4 +1,5 @@
 import { LuauCompiler } from "./LuauCompiler.ts"
-import { LuauCompileOptions } from "./types.ts"
+import { LuauCompileOptions as  _LuauCompileOptions } from "./types.ts"
 
-export { LuauCompiler, LuauCompileOptions }
+export type LuauCompileOptions = _LuauCompileOptions
+export { LuauCompiler }

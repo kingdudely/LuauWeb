@@ -22,7 +22,7 @@ type LuauDebugLevel = 0 | 1 | 2
 type LuauTypeInfoLevel = 0 | 1
 type LuauCoverageLevel = 0 | 1 | 2
 
-export interface LuauCompileOptions {
+export type LuauCompileOptions = {
 	OptimizationLevel: LuauOptimizationLevel
 	DebugLevel: LuauDebugLevel
 	TypeInfoLevel: LuauTypeInfoLevel
