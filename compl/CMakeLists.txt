@@ -13,7 +13,7 @@ add_subdirectory(luau)
 
 # some emscripten config
 set(EMSCRIPTEN_OPTS)
-list(APPEND EMSCRIPTEN_OPTS -sEXPORTED_RUNTIME_METHODS=['HEAP32','HEAPU8','getValue','setValue'] -fexceptions -sSINGLE_FILE=1 -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT=web)
+list(APPEND EMSCRIPTEN_OPTS -fexceptions -sEXPORTED_RUNTIME_METHODS=['HEAP32','HEAPU8','getValue','setValue'] -sALLOW_MEMORY_GROWTH=1 -sSINGLE_FILE=1 -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT=web)
 
 # Compiler variant compile & link options
 set(COMPILER_CC_OPTS)
