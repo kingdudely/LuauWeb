@@ -77,7 +77,7 @@ const [ luau_compile ] = await LuauCompilerModule().then((_Module) => {
 
 		const bytecode_ptr = _luau_compile(src_ptr, source_length, option_ptr, bc_size_ptr)
 		const bytecode_size = Module.HEAP32[bc_size_ptr >> 2]
-		const bytecode = new Uint8Array(Module.HEAPU8.buffer, bytecode_ptr, bytecode_size)
+		const bytecode = (new Uint8Array(Module.HEAPU8.buffer, bytecode_ptr, bytecode_size)).slice()
 		const compile_success = (bytecode[0] != 0)
 
 		option_free()
