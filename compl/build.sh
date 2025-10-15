@@ -1,5 +1,5 @@
 #!/bin/bash
-mkdir build
+mkdir -p build
 cd build
-emcmake cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
-cmake --build . --target LuauWeb --config RelWithDebInfo -j 2
+emcmake cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake --build . --target LuauWeb --config Release -j$(nproc)
