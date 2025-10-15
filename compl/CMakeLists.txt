@@ -66,7 +66,7 @@ if(EMSCRIPTEN)
         -sMINIFY_HTML=1
         -sWASM_BIGINT=0
         -sWASM=1
-        -sBINARYEN_EXTRA_PASSES="--dce,--strip-debug,--vacuum,--merge-blocks,--precompute-propagate,--reorder-functions,--strip-producers,--flatten"
+        -sBINARYEN_EXTRA_PASSES="--dce,--strip-debug,--vacuum,--merge-blocks,--precompute-propagate,--reorder-functions,--strip-producers,--flatten,--type-ssa"
         --bind
     )
 endif()
