@@ -1,4 +1,3 @@
-# I love CHATGPT
 cmake_minimum_required(VERSION 3.20)
 project(LuauWeb LANGUAGES C CXX)
 
@@ -48,7 +47,9 @@ if(EMSCRIPTEN)
 
     # Link-time flags
     set(EMSCRIPTEN_LINK_FLAGS
+        --no-entry
         -sALLOW_MEMORY_GROWTH=1
+        -sALLOW_TABLE_GROWTH=1
         -sMODULARIZE=1
         -sEXPORT_ES6=1
         -sENVIRONMENT=web
