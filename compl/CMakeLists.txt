@@ -47,7 +47,6 @@ if(EMSCRIPTEN)
 
     # Link-time flags
     set(EMSCRIPTEN_LINK_FLAGS
-        --no-entry
         -sALLOW_MEMORY_GROWTH=1
         -sALLOW_TABLE_GROWTH=1
         -sMODULARIZE=1
