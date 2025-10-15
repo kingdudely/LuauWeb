@@ -12,7 +12,7 @@ rm -rf ./luau
 git clone https://github.com/Roblox/luau.git ./luau
 
 rm -rf ./build
-mkdir build
+mkdir -p build
 cd build
 emcmake cmake .. -DCMAKE_BUILD_TYPE=Release
-cmake --build . --target LuauWeb
+cmake --build . --target LuauWeb --config Release -j$(nproc)
